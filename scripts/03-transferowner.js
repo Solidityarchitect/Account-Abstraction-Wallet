@@ -1,8 +1,8 @@
 // imports
 const { getNamedAccounts, ethers } = require("hardhat")
 
-const liquidityPoolAddress = "0x459FeECB0c0Cf74Be0e9e0E3978B2816821de800"
-const receiverAddress = "0x04B8C373e97a906e23d11123f047b2E2342cd9F1"
+const liquidityPoolAddress = "0xa4064799b1BE7F708f1F75c44D863750f27A0a3E"
+const receiverAddress = "0x4Ad8C9b33a5dDd7A4762948153Ebd43Bcf8E91Ad"
 // You can change to the `LP contract address` and `Router address` you deployed
 
 // async main
