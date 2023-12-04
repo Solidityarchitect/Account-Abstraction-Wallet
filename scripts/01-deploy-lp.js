@@ -1,18 +1,18 @@
 // imports
 const { run, network, getNamedAccounts, ethers } = require("hardhat")
 
-const linkTokenAddress = "0x779877A7B0D9E8603169DdbD7836e478b4624789"
-const FUND_AMOUNT = ethers.utils.parseEther("1")
+const tokenAddress = "0x5425890298aed601595a70AB815c96711a31Bc65"
+const FUND_AMOUNT = ethers.utils.parseUnits("1", 6)
 
 // async main
 async function main() {
     const { deployer } = await getNamedAccounts()
-    const linkContract = await ethers.getContractAt("ERC20", linkTokenAddress)
+    const linkContract = await ethers.getContractAt("ERC20", tokenAddress)
     const LiquidityPoolFactory = await ethers.getContractFactory(
         "LiquidityPool"
     )
     console.log("Deploying contract...")
-    const liquidityPool = await LiquidityPoolFactory.deploy(linkTokenAddress)
+    const liquidityPool = await LiquidityPoolFactory.deploy(tokenAddress)
     await liquidityPool.deployed()
     console.log(`Deployed contract to: ${liquidityPool.address}`)
 
@@ -29,16 +29,17 @@ async function main() {
         liquidityPool.address
     )
     console.log(
-        `Liquidity pool balance: ${ethers.utils.formatEther(
-            liquidityPoolBalance
-        )} LINK`
+        `Deployer balance: ${ethers.utils.formatUnits(
+            liquidityPoolBalance,
+            6
+        )} USDC`
     )
 
     // Verify contract
     if (network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
         console.log("Waiting for block confirmations...")
         await liquidityPool.deployTransaction.wait(3)
-        await verify(liquidityPool.address, [linkTokenAddress])
+        await verify(liquidityPool.address, [tokenAddress])
     }
 }
 
