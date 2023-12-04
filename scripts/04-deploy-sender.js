@@ -1,11 +1,11 @@
 // imports
 const { run, network, getNamedAccounts, ethers } = require("hardhat")
 
-const linkTokenAddress = "0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846"
-const fujiRouter = "0x554472a2720e5e7d5d3c817529aba05eed5f82d8"
-const rossChainToken = "0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846"
+const linkTokenAddress = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB"
+const fujiRouter = "0x70499c328e1e2a3c41108bd3730f6670a44595d1"
+const rossChainToken = "0x9999f7Fea5938fD3b1E26A12c3f2fb024e194f97"
 // You can change to you deployed
-const FUND_AMOUNT = ethers.utils.parseEther("0.5")
+const FUND_AMOUNT = ethers.utils.parseEther("1")
 
 // async main
 async function main() {
@@ -23,12 +23,13 @@ async function main() {
     await sourceChainSender.deployed()
     console.log(`Deployed contract to: ${sourceChainSender.address}`)
 
-    // Transfer 0.5 LINK token to the SourceChainSender as feeToken
+    // Transfer 1 LINK token to the SourceChainSender as feeToken
     const approveTx = await linkContract.approve(
         sourceChainSender.address,
         FUND_AMOUNT
     )
     await approveTx.wait(1)
+
     const fundTx = await sourceChainSender.fund(FUND_AMOUNT)
     await fundTx.wait(1)
 
@@ -42,7 +43,7 @@ async function main() {
     )
 
     // Verify contract
-    if (network.config.chainId === 43113 && process.env.SNOWTRACE_API_KEY) {
+    if (network.config.chainId === 80001 && process.env.MUMBAI_RPC_URL) {
         console.log("Waiting for block confirmations...")
         await sourceChainSender.deployTransaction.wait(3)
         await verify(sourceChainSender.address, [
