@@ -90,7 +90,7 @@ npm hardhat run scripts/03-transferowner.js --network fuji  (Pass in the deploye
 4. Deploy SourceChainSender.sol on Polygon Mumbai
 
 ```
-yarn hardhat run scripts/04-deploy-sender.js --network polygonMumbai
+npm hardhat run scripts/04-deploy-sender.js --network polygonMumbai
 ```
 
 ## Cross-chain 1 USDC
